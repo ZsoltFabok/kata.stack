@@ -1,2 +1,4 @@
 bin
 .settings
+# Ignore lib until I move the repository to maven
+lib
