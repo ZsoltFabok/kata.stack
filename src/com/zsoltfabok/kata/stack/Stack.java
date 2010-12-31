@@ -1,6 +1,5 @@
 package com.zsoltfabok.kata.stack;
 
-
 public class Stack {
 
     private int[] container = new int[10];
@@ -17,7 +16,6 @@ public class Stack {
         if (isContainerShrinkable()) {
             shrinkContainerCapacity();
         }
-
         return container[--nextIndex];
     }
 
@@ -44,5 +42,4 @@ public class Stack {
         System.arraycopy(container, 0, extentedContainer, 0, container.length - 10);
         container = extentedContainer;
     }
-
 }
