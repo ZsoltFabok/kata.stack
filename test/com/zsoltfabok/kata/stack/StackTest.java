@@ -1,6 +1,9 @@
 package com.zsoltfabok.kata.stack;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import java.lang.reflect.Field;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +42,7 @@ public class StackTest {
     }
 
     @Test
-    public void shouldHaveAllTheElementsAfterIncreasingInternalCapacity() {
+    public void shouldHaveAllTheElementsAfterEnlargingInternalCapacity() {
         for (int i = 0; i < 11; i++) {
             stack.push(i);
         }
@@ -48,4 +51,42 @@ public class StackTest {
             assertEquals(i, stack.pop());
         }
     }
+
+    @Test
+    public void shouldHaveAllTheElementsAfterShrinkingInternalCapacity() {
+        for (int i = 0; i < 21; i++) {
+            stack.push(i);
+        }
+
+        for (int i = 20; i >= 5; i--) {
+            assertEquals(i, stack.pop());
+        }
+    }
+
+    @Test
+    public void shouldShrinkingInternalCapacity() {
+        for (int i = 0; i < 21; i++) {
+            stack.push(i);
+        }
+
+        for (int i = 20; i >= 5; i--) {
+            stack.pop();
+        }
+
+        assertEquals(10, getContainerArrayLength());
+    }
+
+    private int getContainerArrayLength() {
+        try {
+            Class<?> clazz = stack.getClass();
+            Field field = clazz.getDeclaredField("container");
+            field.setAccessible(true);
+            int[] container = (int[]) field.get(stack);
+            return container.length;
+        } catch (Exception e) {
+            fail();
+        }
+        return -1;
+    }
 }
+
